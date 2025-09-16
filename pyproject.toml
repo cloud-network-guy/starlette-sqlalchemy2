@@ -1,0 +1,20 @@
+[project]
+name = "starlette-sqlalchemy"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohttp==3.12.15",
+    "asyncmy==0.2.10",
+    "asyncpg==0.30.0",
+    "greenlet==3.2.4",
+    #"hypercorn==0.17.3",
+    "python-multipart==0.0.20",
+    "pyyaml==6.0.2",
+    "setuptools==80.9.0",
+    "sqlalchemy==2.0.43",
+    "starlette==0.47.3",
+    "tomli==2.2.1",
+    "tomli-w==1.2.0",
+    "uvicorn==0.35.0",
+    "wheel==0.46.1",
+]
