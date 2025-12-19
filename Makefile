@@ -4,7 +4,7 @@ REPO := cloudbuild
 RUNTIME := python314
 REGION := us-central1
 PORT := 8000
-PLATFORM := linux/amd64
+PLATFORM := linux/arm64
 DOCKER_PORT := 38000
 
 include Makefile.env
@@ -20,6 +20,9 @@ docker-build:
 
 docker-run:
 	docker run -p $(DOCKER_PORT)\:$(PORT) $(SERVICE)
+
+docker-push:
+	docker push $(SERVICE)
 
 gcp-setup:
 	gcloud config set project $(PROJECT_ID)

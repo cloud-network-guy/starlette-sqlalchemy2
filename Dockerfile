@@ -9,6 +9,7 @@ COPY ./pyproject.toml ./
 RUN apk update && apk add --no-cache $PACKAGES
 RUN pip install --upgrade pip && pip install . --break-system-packages
 RUN mkdir -p $APP_DIR
-COPY *.py $APP_DIR/
+COPY app.py $APP_DIR/
+#CMD ["pip", "list"]
 ENTRYPOINT cd $APP_DIR && uvicorn $APP --app-dir $APP_DIR --host 0.0.0.0 --port $PORT --reload
 EXPOSE $PORT/tcp
