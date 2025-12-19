@@ -1,15 +1,11 @@
-ARG RUNTIME="python:3.13"
+ARG RUNTIME="python:3.14"
 FROM ${RUNTIME}-alpine
 ARG PACKAGES="python3-dev gcc make musl-dev"
-#ARG DEBIAN_FRONTEND=noninteractive
 ENV PORT=8000
 ENV APP_DIR=/opt/www/app
 ENV APP=app:app
 WORKDIR /tmp
-#RUN apt update && apt install -y python3-full python3-pip
 COPY ./pyproject.toml ./
-#RUN pip install . --break-system-packages
-#RUN apt clean && rm -Rf /var/lib/apt/lists/*
 RUN apk update && apk add --no-cache $PACKAGES
 RUN pip install --upgrade pip && pip install . --break-system-packages
 RUN mkdir -p $APP_DIR

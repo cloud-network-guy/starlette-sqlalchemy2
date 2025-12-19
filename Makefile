@@ -1,7 +1,7 @@
-SERVICE = starlette-sqlalchemy
+SERVICE = starlette-sqlalchemy2
 HOST := us-docker.pkg.dev
 REPO := cloudbuild
-RUNTIME := python313
+RUNTIME := python314
 REGION := us-central1
 PORT := 8000
 PLATFORM := linux/amd64
@@ -13,7 +13,7 @@ IMAGE = $(HOST)/$(PROJECT_ID)/$(REPO)/$(SERVICE):latest
 
 all: docker gcp
 docker: docker-build docker-run
-gcp: gcp-setup app-engine cloud-function cloud-run
+gcp: gcp-setup cloud-function cloud-run
 
 docker-build:
 	docker build --tag $(SERVICE) --platform $(PLATFORM) .
@@ -25,9 +25,6 @@ gcp-setup:
 	gcloud config set project $(PROJECT_ID)
 	gcloud config set core/project $(PROJECT_ID)
 	gcloud config set compute/region $(REGION)
-
-app-engine:
-	gcloud app deploy ./app.yaml
 
 cloud-function:
 	gcloud config set functions/region $(REGION)
