@@ -1,15 +1,18 @@
-FROM debian:trixie-slim
-ARG DEBIAN_FRONTEND=noninteractive
+ARG RUNTIME="python:3.13"
+FROM ${RUNTIME}-alpine
+ARG PACKAGES="python3-dev gcc make musl-dev"
+#ARG DEBIAN_FRONTEND=noninteractive
 ENV PORT=8000
-ENV APP_DIR=/opt
+ENV APP_DIR=/opt/www/app
 ENV APP=app:app
 WORKDIR /tmp
-RUN apt update && apt install -y python3-full python3-pip
+#RUN apt update && apt install -y python3-full python3-pip
 COPY ./pyproject.toml ./
-RUN pip install . --break-system-packages
-RUN apt clean && rm -Rf /var/lib/apt/lists/*
+#RUN pip install . --break-system-packages
+#RUN apt clean && rm -Rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache $PACKAGES
+RUN pip install --upgrade pip && pip install . --break-system-packages
 RUN mkdir -p $APP_DIR
 COPY *.py $APP_DIR/
-#ENTRYPOINT cd $APP_DIR && hypercorn -b 0.0.0.0:$PORT -w 1 --access-logfile '-' $APP
 ENTRYPOINT cd $APP_DIR && uvicorn $APP --app-dir $APP_DIR --host 0.0.0.0 --port $PORT --reload
 EXPOSE $PORT/tcp
