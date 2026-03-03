@@ -1,4 +1,4 @@
-SERVICE = starlette-sqlalchemy2
+SERVICE := starlette-sqlalchemy2
 HOST := us-docker.pkg.dev
 REPO := cloudbuild
 RUNTIME := python314
